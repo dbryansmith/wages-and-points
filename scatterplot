@@ -1,0 +1,35 @@
+import pandas as pd
+import matplotlib.pyplot as plt
+from matplotlib import cm
+import matplotlib.colors as colors
+import numpy as np
+
+# wage data from the Global Sports Salaries Survey 2018 from SportingIntelligence
+
+wagedata = pd.read_csv("premierleagewages.csv")
+
+df = pd.DataFrame(wagedata)
+
+df['TeamPoints'] = + df['Team'] + ' ' + df['Points'].map(str)
+
+fig, ax = plt.subplots()
+
+colormap = cm.nipy_spectral 
+
+# setting a list of colors to not have to manually assign a color to every team 
+colorlist = [colors.rgb2hex(colormap(i)) for i in np.linspace(0, 1, len(df['Team']))] 
+
+for i,c in enumerate(colorlist):
+
+    x = df['AVG Annual Per Player'][i]
+    y = df['Points'][i]
+    n = df['TeamPoints']
+
+    ax.scatter(x, y, label=n, c=c, linewidth=0.1)
+
+ax.legend(n, loc='center left', scatterpoints=1, fontsize=8, bbox_to_anchor=(1, 0.5))
+plt.xlabel('AVG Annual Pay(£)')
+plt.ylabel('Points through 19 games')
+
+fig.savefig('wagesandpoints')
+plt.show()
