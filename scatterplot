@@ -33,3 +33,4 @@ plt.ylabel('Points through 19 games')
 
 fig.savefig('wagesandpoints')
 plt.show()
+
